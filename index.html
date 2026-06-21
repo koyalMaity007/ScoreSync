@@ -4,293 +4,341 @@
 <head>
 
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>ScoreSync - Student Analytics Platform</title>
 
-    <link rel="stylesheet" href="Scoresync.css"/>
+    <link rel="stylesheet" href="Scoresync.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <div class="header">
+        <div class="header">
 
-        <h1>ScoreSync</h1>
+            <h1>ScoreSync</h1>
 
-        <p>Smart Student Performance Analytics System</p>
+            <p>Smart Student Performance Analytics System</p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="student-info">
+
+                <div class="input-group">
+                    <label>Student Name</label>
+                    <input type="text" id="studentName" placeholder="Enter student name">
+                </div>
+
+                <div class="input-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="rollNumber" placeholder="Enter roll number">
+                </div>
+
+                <div class="input-group">
+                    <label>Class</label>
+                    <input type="text" id="studentClass" placeholder="Enter class">
+                </div>
+
+            </div>
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks Obtained</th>
+                            <th>Total Marks</th>
+                            <th>Grade</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="subjectTable">
+
+                        <tr>
+
+                            <td>
+                                <input type="text" placeholder="Subject Name" oninput="saveData()">
+                            </td>
+
+                            <td>
+                                <input type="number" class="marks" placeholder="0" min="0"
+                                    oninput="updateGrade(this); saveData();">
+                            </td>
+
+                            <td>
+                                <input type="number" class="total" placeholder="100" min="1"
+                                    oninput="updateGrade(this); saveData();">
+                            </td>
+
+                            <td class="grade">-</td>
+
+                            <td>
+                                <button onclick="removeSubject(this)">
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="buttons">
+
+                <button onclick="addSubject()">
+                    Add Subject
+                </button>
+
+                <button onclick="generateMarksheet()">
+                    Generate Marksheet
+                </button>
+
+                <button onclick="window.print()">
+                    Print
+                </button>
+
+                <button onclick="clearAllData()">
+                    Clear Data
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- RESULT CARD -->
+
+        <div class="result-card" id="resultCard">
+
+            <h2>Final Result</h2>
+
+            <div class="result-grid">
+
+                <div class="result-box">
+                    <h3>Total Obtained</h3>
+                    <p id="obtainedMarks">0</p>
+                </div>
+
+                <div class="result-box">
+                    <h3>Total Marks</h3>
+                    <p id="totalMarks">0</p>
+                </div>
+
+                <div class="result-box">
+                    <h3>Percentage</h3>
+                    <p id="percentage">0%</p>
+                </div>
+
+                <div class="result-box">
+                    <h3>GPA</h3>
+                    <p id="gpa">0</p>
+                </div>
+
+                <div class="result-box">
+                    <h3>Final Grade</h3>
+                    <p id="finalGrade">-</p>
+                </div>
+
+                <div class="result-box">
+                    <h3>Status</h3>
+                    <p id="status">-</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ANALYTICS CARD -->
+
+        <div class="analytics-card" id="analyticsCard">
+
+            <h2>Performance Analytics</h2>
+
+            <div class="analytics-grid">
+
+                <div class="analytics-box">
+                    <h3>Best Subject</h3>
+                    <p id="bestSubject">-</p>
+                </div>
+
+                <div class="analytics-box">
+                    <h3>Weakest Subject</h3>
+                    <p id="weakSubject">-</p>
+                </div>
+
+                <div class="analytics-box">
+                    <h3>Growth Rate</h3>
+                    <p id="growthRate">0%</p>
+                </div>
+
+                <div class="analytics-box">
+                    <h3>Focus Area</h3>
+                    <p id="focusArea">-</p>
+                </div>
+
+            </div>
+
+            <div class="recommendation">
+
+                <h3>AI Recommendation</h3>
+
+                <p id="recommendationText">
+                    No analysis generated.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- PRINT SECTION -->
+
+        <div class="print-section" id="printSection">
+
+            <div class="certificate">
+
+                <div class="certificate-header">
+
+                    <h1>ScoreSync</h1>
+
+                    <p>Student Performance Analytics Report</p>
+
+                    <span>
+                        Auto-Generated Academic Evaluation System
+                    </span>
+
+                </div>
+
+                <div class="certificate-title">
+
+                    <h2>OFFICIAL PERFORMANCE REPORT</h2>
+
+                    <p>
+                        Generated by ScoreSync AI Analytics Engine
+                    </p>
+
+
+                    <div class="system-info">
+
+                        <div>
+                            Report ID: SSX-2025-10492
+                        </div>
+
+                        <div>
+                            Date:
+                            <span id="printDate"></span>
+                        </div>
+
+                        <div>
+                            Mode: Auto Evaluation
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="student-details">
+
+                    <div>
+                        <strong>Name:</strong>
+                        <span id="printStudentName">-</span>
+                    </div>
+
+                    <div>
+                        <strong>Roll No:</strong>
+                        <span id="printRollNumber">-</span>
+                    </div>
+
+                    <div>
+                        <strong>Class:</strong>
+                        <span id="printClass">-</span>
+                    </div>
+
+                </div>
+
+                <table class="print-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                            <th>Grade</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="printTableBody">
+
+                    </tbody>
+
+                </table>
+
+                <div class="summary-section">
+
+                    <div class="summary-box">
+                        <h3>Overall Percentage</h3>
+                        <p id="printPercentage">0%</p>
+                    </div>
+
+                    <div class="summary-box">
+                        <h3>Final Grade</h3>
+                        <p id="printGrade">A+</p>
+                    </div>
+
+                    <div class="summary-box">
+                        <h3>Status</h3>
+                        <p id="printStatus">PASS</p>
+                    </div>
+
+                </div>
+
+                <div class="teacher-comment">
+
+                    <h3>Teacher's Comment</h3>
+
+                    <p id="printComment">
+                        Excellent academic performance with strong consistency.
+                    </p>
+
+                </div>
+
+                <div class="signature-section">
+
+                    <div>
+                        ____________________
+                        <p>Class Teacher</p>
+                    </div>
+
+                    <div>
+                        ____________________
+                        <p>Principal</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="card">
-
-        <div class="student-info">
-
-            <div class="input-group">
-                <label>Student Name</label>
-                <input type="text" id="studentName" placeholder="Enter student name">
-            </div>
-
-            <div class="input-group">
-                <label>Roll Number</label>
-                <input type="text" id="rollNumber" placeholder="Enter roll number">
-            </div>
-
-            <div class="input-group">
-                <label>Class</label>
-                <input type="text" id="studentClass" placeholder="Enter class">
-            </div>
-
-        </div>
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>Subject</th>
-                    <th>Marks Obtained</th>
-                    <th>Total Marks</th>
-                    <th>Grade</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="subjectTable">
-
-                <tr>
-                    <td><input type="text" placeholder="Subject Name"></td>
-                    <td><input type="number" class="marks" placeholder="0"></td>
-                    <td><input type="number" class="total" placeholder="100"></td>
-                    <td class="grade">-</td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-        <div class="buttons">
-
-            <button onclick="addSubject()">
-                Add Subject
-            </button>
-
-            <button onclick="generateMarksheet()">
-                Generate Marksheet
-            </button>
-
-            <button onclick="window.print()">
-                Print
-            </button>
-
-        </div>
-
-    </div>
-
-    <!-- RESULT CARD -->
-
-    <div class="result-card" id="resultCard">
-
-        <h2>Final Result</h2>
-
-        <div class="result-grid">
-
-            <div class="result-box">
-                <h3>Total Obtained</h3>
-                <p id="obtainedMarks">0</p>
-            </div>
-
-            <div class="result-box">
-                <h3>Total Marks</h3>
-                <p id="totalMarks">0</p>
-            </div>
-
-            <div class="result-box">
-                <h3>Percentage</h3>
-                <p id="percentage">0%</p>
-            </div>
-
-            <div class="result-box">
-                <h3>GPA</h3>
-                <p id="gpa">0</p>
-            </div>
-
-            <div class="result-box">
-                <h3>Final Grade</h3>
-                <p id="finalGrade">-</p>
-            </div>
-
-            <div class="result-box">
-                <h3>Status</h3>
-                <p id="status">-</p>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- ANALYTICS CARD -->
-
-    <div class="analytics-card" id="analyticsCard">
-
-        <h2>Performance Analytics</h2>
-
-        <div class="analytics-grid">
-
-            <div class="analytics-box">
-                <h3>Best Subject</h3>
-                <p id="bestSubject">-</p>
-            </div>
-
-            <div class="analytics-box">
-                <h3>Weakest Subject</h3>
-                <p id="weakSubject">-</p>
-            </div>
-
-            <div class="analytics-box">
-                <h3>Growth Rate</h3>
-                <p id="growthRate">0%</p>
-            </div>
-
-            <div class="analytics-box">
-                <h3>Focus Area</h3>
-                <p id="focusArea">-</p>
-            </div>
-
-        </div>
-
-        <div class="recommendation">
-
-            <h3>AI Recommendation</h3>
-
-            <p id="recommendationText">
-                No analysis generated.
-            </p>
-
-        </div>
-
-    </div>
-<div class="print-section" id="printSection">
-
-    <div class="certificate">
-
-        <div class="certificate-header">
-
-    <h1>ScoreSync</h1>
-
-    <p>Student Performance Analytics Report</p>
-
-    <span>Auto-Generated Academic Evaluation System</span>
-
-</div>
-
-        <div class="certificate-title">
-
-    <h2>OFFICIAL PERFORMANCE REPORT</h2>
-
-    <p>Generated by ScoreSync AI Analytics Engine</p>
-<div class="system-info">
-
-    <div>Report ID: SSX-2025-10492</div>
-    <div>Date: <span id="printDate"></span></div>
-    <div>Mode: Auto Evaluation</div>
-
-</div>
-</div>
-        <div class="student-details">
-
-            <div>
-                <strong>Name:</strong>
-                <span id="printStudentName">-</span>
-            </div>
-
-            <div>
-                <strong>Roll No:</strong>
-                <span id="printRollNumber">-</span>
-            </div>
-
-            <div>
-                <strong>Class:</strong>
-                <span id="printClass">-</span>
-            </div>
-
-        </div>
-
-        <table class="print-table">
-
-            <thead>
-
-                <tr>
-                    <th>Subject</th>
-                    <th>Marks</th>
-                    <th>Total</th>
-                    <th>Percentage</th>
-                    <th>Grade</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="printTableBody">
-
-            </tbody>
-
-        </table>
-
-        <div class="summary-section">
-
-            <div class="summary-box">
-                <h3>Overall Percentage</h3>
-                <p id="printPercentage">0%</p>
-            </div>
-
-            <div class="summary-box">
-                <h3>Final Grade</h3>
-                <p id="printGrade">A+</p>
-            </div>
-
-            <div class="summary-box">
-                <h3>Status</h3>
-                <p id="printStatus">PASS</p>
-            </div>
-
-        </div>
-
-        <div class="teacher-comment">
-
-            <h3>Teacher's Comment</h3>
-
-            <p id="printComment">
-                Excellent academic performance with strong consistency.
-            </p>
-
-        </div>
-
-        <div class="signature-section">
-
-            <div>
-                ____________________
-                <p>Class Teacher</p>
-            </div>
-
-            <div>
-                ____________________
-                <p>Principal</p>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-</div>
-
-<script src="scroresync.js"></script>
+    <script src="Scoresync.js"></script>
 
 </body>
+
 </html>
